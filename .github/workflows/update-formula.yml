@@ -8,8 +8,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        # actions/checkout v4+ already uses Node 24
+      - uses: actions/checkout@v6
 
       - name: Download checksums
         run: |
@@ -31,6 +30,6 @@ jobs:
               -e "s/{{SHA256_LINUX_X64}}/${{ env.SHA_LINUX }}/g" \
               Formula/pcr.rb.template > Formula/pcr.rb
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "pcr ${{ github.event.client_payload.version }}"
