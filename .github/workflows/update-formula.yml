@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        # actions/checkout v4+ already uses Node 24
 
       - name: Download checksums
         run: |
