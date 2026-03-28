@@ -16,10 +16,13 @@ jobs:
           BASE="https://github.com/pcr-developers/cli/releases/download/${VERSION}"
           echo "Fetching checksums for ${VERSION}..."
           SHA_ARM64=$(curl -sL "${BASE}/pcr-macos-arm64.sha256")
+          SHA_MACOS_X64=$(curl -sL "${BASE}/pcr-macos-x64.sha256")
           SHA_LINUX=$(curl -sL "${BASE}/pcr-linux-x64.sha256")
-          echo "ARM64: ${SHA_ARM64}"
-          echo "Linux: ${SHA_LINUX}"
+          echo "macOS arm64: ${SHA_ARM64}"
+          echo "macOS x64:   ${SHA_MACOS_X64}"
+          echo "Linux x64:   ${SHA_LINUX}"
           echo "SHA_ARM64=${SHA_ARM64}" >> $GITHUB_ENV
+          echo "SHA_MACOS_X64=${SHA_MACOS_X64}" >> $GITHUB_ENV
           echo "SHA_LINUX=${SHA_LINUX}" >> $GITHUB_ENV
 
       - name: Update formula
@@ -27,6 +30,7 @@ jobs:
           VERSION="${{ github.event.client_payload.version }}"
           sed -e "s/{{VERSION}}/${VERSION}/g" \
               -e "s/{{SHA256_MACOS_ARM64}}/${{ env.SHA_ARM64 }}/g" \
+              -e "s/{{SHA256_MACOS_X64}}/${{ env.SHA_MACOS_X64 }}/g" \
               -e "s/{{SHA256_LINUX_X64}}/${{ env.SHA_LINUX }}/g" \
               Formula/pcr.rb.template > Formula/pcr.rb
 

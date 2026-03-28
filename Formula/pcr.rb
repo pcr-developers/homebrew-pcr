@@ -8,6 +8,10 @@ class Pcr < Formula
       url "https://github.com/pcr-developers/cli/releases/download/v0.1.3/pcr-macos-arm64"
       sha256 "placeholder"
     end
+    on_intel do
+      url "https://github.com/pcr-developers/cli/releases/download/v0.1.3/pcr-macos-x64"
+      sha256 "placeholder"
+    end
   end
 
   on_linux do
@@ -19,7 +23,11 @@ class Pcr < Formula
 
   def install
     if OS.mac?
-      bin.install "pcr-macos-arm64" => "pcr"
+      if Hardware::CPU.arm?
+        bin.install "pcr-macos-arm64" => "pcr"
+      else
+        bin.install "pcr-macos-x64" => "pcr"
+      end
     else
       bin.install "pcr-linux-x64" => "pcr"
     end
