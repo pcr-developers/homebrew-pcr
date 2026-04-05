@@ -3,6 +3,11 @@ name: Update Formula
 on:
   repository_dispatch:
     types: [new-release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version tag (e.g. v0.1.6)"
+        required: true
 
 jobs:
   update:
@@ -12,7 +17,7 @@ jobs:
 
       - name: Download checksums
         run: |
-          VERSION="${{ github.event.client_payload.version }}"
+          VERSION="${{ github.event.client_payload.version || github.event.inputs.version }}"
           BASE="https://github.com/pcr-developers/cli/releases/download/${VERSION}"
           echo "Fetching checksums for ${VERSION}..."
           SHA_ARM64=$(curl -sL "${BASE}/pcr-macos-arm64.sha256")
@@ -27,7 +32,7 @@ jobs:
 
       - name: Update formula
         run: |
-          VERSION="${{ github.event.client_payload.version }}"
+          VERSION="${{ github.event.client_payload.version || github.event.inputs.version }}"
           sed -e "s/{{VERSION}}/${VERSION}/g" \
               -e "s/{{SHA256_MACOS_ARM64}}/${{ env.SHA_ARM64 }}/g" \
               -e "s/{{SHA256_MACOS_X64}}/${{ env.SHA_MACOS_X64 }}/g" \
@@ -36,4 +41,4 @@ jobs:
 
       - uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: "pcr ${{ github.event.client_payload.version }}"
+          commit_message: "pcr ${{ github.event.client_payload.version || github.event.inputs.version }}"
