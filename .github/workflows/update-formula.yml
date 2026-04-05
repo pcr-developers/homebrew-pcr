@@ -43,7 +43,12 @@ jobs:
               -e "s/{{SHA256_LINUX_X64}}/${{ env.SHA_LINUX }}/g" \
               Formula/pcr.rb.template > Formula/pcr.rb
 
-      - uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          commit_message: "pcr ${{ github.event.client_payload.version || github.event.inputs.version }}"
-          token: ${{ secrets.GH_PAT }}
+      - name: Commit and push
+        run: |
+          VERSION="${{ github.event.client_payload.version || github.event.inputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${{ secrets.GH_PAT }}@github.com/pcr-developers/homebrew-pcr.git"
+          git add Formula/pcr.rb
+          git diff --cached --quiet || git commit -m "pcr ${VERSION}"
+          git push
