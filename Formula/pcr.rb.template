@@ -20,10 +20,6 @@ class Pcr < Formula
       url "https://github.com/pcr-developers/cli/releases/download/{{VERSION}}/pcr-linux-x64"
       sha256 "{{SHA256_LINUX_X64}}"
     end
-    on_arm do
-      url "https://github.com/pcr-developers/cli/releases/download/{{VERSION}}/pcr-linux-arm64"
-      sha256 "{{SHA256_LINUX_ARM64}}"
-    end
   end
 
   def install
@@ -33,8 +29,6 @@ class Pcr < Formula
       else
         bin.install "pcr-macos-x64" => "pcr"
       end
-    elsif Hardware::CPU.arm?
-      bin.install "pcr-linux-arm64" => "pcr"
     else
       bin.install "pcr-linux-x64" => "pcr"
     end
