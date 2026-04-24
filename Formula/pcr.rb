@@ -7,18 +7,18 @@ class Pcr < Formula
   on_macos do
     on_arm do
       url "https://github.com/pcr-developers/cli/releases/download/v0.2.0/pcr-macos-arm64"
-      sha256 "1c0abb9a3b131decde93f06befe2905d5c4000afaae014a76527995bad255e5c"
+      sha256 "5c6ccf0f764eccca726eaa70bcedfeaeb9e20eaa39476f184e686b6747f9d519"
     end
     on_intel do
       url "https://github.com/pcr-developers/cli/releases/download/v0.2.0/pcr-macos-x64"
-      sha256 "f6d5221f706e9544d8ce58bc72a5b87d4f6ff0655d2128cd6cb04e72b4ef1883"
+      sha256 "78da01af4eaeececd7414d0d246fcbd287ae9b0d1aa9ab2a6b193552c9d5aa2f"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/pcr-developers/cli/releases/download/v0.2.0/pcr-linux-x64"
-      sha256 "1550214144aad4793829400caaff1a132e9b940e8a7bd5c8872bfa36e34666c1"
+      sha256 "7652e5a8cfbcfce1d701aba4233077e834f7f9aaa75b48584b21aceda39702da"
     end
   end
 
