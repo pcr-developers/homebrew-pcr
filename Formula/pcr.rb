@@ -1,23 +1,24 @@
 class Pcr < Formula
   desc "PCR.dev CLI — capture AI coding prompts for peer review"
   homepage "https://pcr.dev"
-  version "v0.1.17"
+  version "v0.2.0"
+  license "Apache-2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/pcr-developers/cli/releases/download/v0.1.17/pcr-macos-arm64"
-      sha256 "d1fbbb876cf8a1b36b1d51cffcc56c9e3fa9cc3e349f1d585372b12a077b5eb1"
+      url "https://github.com/pcr-developers/cli/releases/download/v0.2.0/pcr-macos-arm64"
+      sha256 "7703ad566e56929c777b1d343898df312a0a3a16b6bab92a30a8c4cea1a303af"
     end
     on_intel do
-      url "https://github.com/pcr-developers/cli/releases/download/v0.1.17/pcr-macos-x64"
-      sha256 "06758be607af0f37987568dd5b39b51b83b8322904e44696faff02d22d550b18"
+      url "https://github.com/pcr-developers/cli/releases/download/v0.2.0/pcr-macos-x64"
+      sha256 "ff9654aa66a69d0e76c48a72d77f6f24688e77d8695da26786257f4eec7f35f8"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/pcr-developers/cli/releases/download/v0.1.17/pcr-linux-x64"
-      sha256 "79cf9a1b9de62ad27211932a40e381a18544456dbc402f57f946243c56d05648"
+      url "https://github.com/pcr-developers/cli/releases/download/v0.2.0/pcr-linux-x64"
+      sha256 "00d892b8f22bd0172ebd4d266345adfc3ae08c830590129684902ee29c1b4b6a"
     end
   end
 
