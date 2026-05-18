@@ -42,7 +42,18 @@ jobs:
       - name: Update formula
         run: |
           VERSION="${{ github.event.client_payload.version || github.event.inputs.version }}"
-          sed -e "s/{{VERSION}}/${VERSION}/g" \
+          VERSION_NUMBER="${VERSION#v}"
+          # {{VERSION_NUMBER}} must be substituted BEFORE {{VERSION}}
+          # because the former contains "{{VERSION" as a substring;
+          # if we ran the {{VERSION}} substitution first it would
+          # corrupt every {{VERSION_NUMBER}} into "v0.3.0_NUMBER}}".
+          # Homebrew's audit forbids a leading "v" in the formula's
+          # `version` field, but the GitHub release URL filenames
+          # are v-prefixed — so the template uses {{VERSION_NUMBER}}
+          # for the `version` declaration and {{VERSION}} for the
+          # download URLs.
+          sed -e "s/{{VERSION_NUMBER}}/${VERSION_NUMBER}/g" \
+              -e "s/{{VERSION}}/${VERSION}/g" \
               -e "s/{{SHA256_MACOS_ARM64}}/${{ env.SHA_ARM64 }}/g" \
               -e "s/{{SHA256_MACOS_X64}}/${{ env.SHA_MACOS_X64 }}/g" \
               -e "s/{{SHA256_LINUX_X64}}/${{ env.SHA_LINUX }}/g" \
