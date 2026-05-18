@@ -1,7 +1,7 @@
 class Pcr < Formula
-  desc "PCR.dev CLI — capture AI coding prompts for peer review"
+  desc "Capture AI coding prompts for peer review on PCR.dev"
   homepage "https://pcr.dev"
-  version "v0.2.6"
+  version "0.2.6"
   license "Apache-2.0"
 
   on_macos do
