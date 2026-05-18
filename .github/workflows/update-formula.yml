@@ -16,8 +16,13 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_PAT }}
+        # Uses the auto-supplied `secrets.GITHUB_TOKEN` (implicit when
+        # no `token:` is set). The `permissions: contents: write` block
+        # above grants that token push access, so we don't need a
+        # long-lived Personal Access Token. The previous PAT-based
+        # setup silently broke whenever the PAT expired (the v0.2.7,
+        # v0.2.8, v0.2.9, and v0.3.0 dispatches all failed at the
+        # checkout step until this fix landed).
 
       - name: Download checksums
         run: |
@@ -44,11 +49,13 @@ jobs:
               Formula/pcr.rb.template > Formula/pcr.rb
 
       - name: Commit and push
+        # `actions/checkout@v4` already configured an authenticated
+        # remote URL using the workflow's `GITHUB_TOKEN`, so we don't
+        # need to rewrite the remote here. Just commit + push.
         run: |
           VERSION="${{ github.event.client_payload.version || github.event.inputs.version }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:${{ secrets.GH_PAT }}@github.com/pcr-developers/homebrew-pcr.git"
           git add Formula/pcr.rb
           git diff --cached --quiet || git commit -m "pcr ${VERSION}"
           git push
